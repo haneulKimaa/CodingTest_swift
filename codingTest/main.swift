@@ -363,3 +363,16 @@
 //    }
 //}
 //print(count)
+
+
+
+// 10926
+//var line = readLine()!
+//print("\(line)??!")
+
+
+// 18108
+//var line = Int(readLine()!)! - 543
+//print(line)
+
+
