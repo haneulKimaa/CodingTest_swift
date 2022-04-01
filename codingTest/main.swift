@@ -375,4 +375,28 @@
 //var line = Int(readLine()!)! - 543
 //print(line)
 
-
+// 2525
+//var time = readLine()!.split(separator: " ").map({
+//    Int($0)!
+//})
+//var plusTime = Int(readLine()!)!
+//var hour: Int = 0
+//var minute: Int = 0
+//
+//if time[1] + plusTime >= 60 {
+//    
+//    hour = time[0] + (time[1] + plusTime) / 60
+//    minute = (time[1] + plusTime) % 60
+//
+//    if hour == 24 {
+//        hour = 0
+//    }
+//    else if hour > 24 {
+//        hour = hour % 24
+//    }
+//}
+//else {
+//    hour = time[0]
+//    minute = time[1] + plusTime
+//}
+//print("\(hour) \(minute)")
