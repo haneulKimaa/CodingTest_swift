@@ -400,3 +400,40 @@
 //    minute = time[1] + plusTime
 //}
 //print("\(hour) \(minute)")
+
+
+// 2480
+//var number = readLine()
+//var num = number!.split(separator: " ").map {Int($0)!}
+//var price = 0
+//var count = 0
+//var a: Set<Int> = []
+//a.insert(num[0])
+//a.insert(num[1])
+//a.insert(num[2])
+//count = a.count
+//
+//if count == 3{
+//    price = num.max()! * 100
+//}
+//else if count == 2{
+//    var c = 1
+//    if num[0] == num[1] {
+//        c = num[0]
+//    }
+//    else if num[1] == num[2] {
+//        c = num[1]
+//    }
+//
+//    else if num[0] == num[2] {
+//        c = num[0]
+//    }
+//    price = 1000 + c * 100
+//}
+//
+//else {
+//    price = num[0] * 1000 + 10000
+//
+//}
+//print(price)
+
