@@ -437,3 +437,124 @@
 //}
 //print(price)
 
+
+// 2775 - 런타임 에러
+//var count = Int(readLine()!)!
+//var k: [Int] = []
+//var n: [Int] = []
+//
+//for _ in 0..<count {
+//    var a = Int(readLine()!)!
+//    k.append(a)
+//    var b = Int(readLine()!)!
+//    n.append(b)
+//}
+//
+//var zerofloor: [Int] = []
+//var nextfloor: [Int] = []
+//
+//
+//for i in 1...14 {
+//    zerofloor.append(i)
+//}
+//
+//func howManyPeople(floor: Int, room: Int) {
+//    for _ in 0..<floor {
+//        var a: Int = 1
+//        for j in 0..<room {
+//
+//            if j == 0 {
+//                nextfloor.append(1)
+//            }
+//            else {
+//                a += zerofloor[j]
+//                nextfloor.append(a)
+//            }
+//        }
+//        zerofloor = nextfloor
+//    }
+//    print(nextfloor.last!)
+//}
+//
+//for i in 0..<count {
+//    howManyPeople(floor: k[i], room: n[i])
+//}
+
+// 성공
+//var count = Int(readLine()!)!
+//var k: [Int] = []
+//var zerofloor: [Int] = []
+//var nextfloor: [Int] = []
+//
+//
+//for _ in 0..<count {
+//    let a = Int(readLine()!)!
+//    let b = Int(readLine()!)!
+//
+//    zerofloor.removeAll()
+//    for i in 1...14 {
+//        zerofloor.append(i)
+//    }
+//    if a == 0 {
+//        k.append(b)
+//    }
+//    else {
+//        for _ in 0..<a {
+//
+//            var sum: Int = 1
+//            nextfloor.removeAll()
+//
+//            for j in 0..<b {
+//                if j == 0 {
+//                    nextfloor.append(1)
+//                }
+//                else {
+//                    sum += zerofloor[j]
+//                    nextfloor.append(sum)
+//                }
+//            }
+//            zerofloor = nextfloor
+//        }
+//        k.append(nextfloor.last!)
+//    }
+//
+//}
+//for i in 0..<k.count {
+//    print(k[i])
+//}
+
+// 2차원 배열 - 실패
+//let count = Int(readLine()!)!
+//
+//var array: [[Int]] = [[]]
+//var result: [Int] = []
+//
+//for _ in 0...count-1 {
+//    let floor: Int = Int(readLine()!)!
+//    let room: Int = Int(readLine()!)!
+//
+//
+//    for j in 1...14 {
+//        array[0].append(j)
+//    }
+//    for f in 1..<floor {
+//            var sum = 0
+//            for r in 0..<room-1 {
+//                if room == 1 {
+//                    array[f].append(1)
+//                }
+//                else {
+//
+//                    sum += array[f-1][r]
+//                    array.append([])
+//                    array[f].append(sum)
+//                }
+//            }
+//        }
+//    print(array)
+//    result.append((array.last?.last)!)
+//}
+//
+//for i in 0..<count {
+//    print(result[i])
+//}
