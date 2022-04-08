@@ -12,6 +12,9 @@
 // 3. for문
 // 4. while문
 
+import Darwin
+import Foundation
+
 
 // 1008번
 //let line = readLine()
@@ -557,4 +560,29 @@
 //
 //for i in 0..<count {
 //    print(result[i])
+//}
+
+// 15552 - 시간 초과
+//let count = Int(readLine()!)!
+//var result: [Int] = []
+//for _ in 0..<count {
+//    let num = readLine()!.split(separator: " ").map{ Int($0)! }
+//    result.append(num[0] + num[1])
+//}
+//for i in 0..<count {
+//    print(result[i])
+//}
+
+// 2751
+//let count = Int(readLine()!)!
+//var result: Set<Int> = []
+//var result_arr: [Int] = []
+//for _ in 0..<count {
+//    var num = Int(readLine()!)!
+//    result.insert(num)
+//}
+//result_arr = result.sorted(by: <)
+//
+//for i in 0..<result_arr.count {
+//    print(result_arr[i])
 //}
