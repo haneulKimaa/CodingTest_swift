@@ -586,3 +586,40 @@ import Foundation
 //for i in 0..<result_arr.count {
 //    print(result_arr[i])
 //}
+
+
+// 2839
+//let mount: Int = Int(readLine()!)!
+//
+//
+//var fiveBag: Int = 1
+//var threeBag: Int = 1
+//var resultArr: [[Int]] = []
+//
+//resultArr.removeAll()
+//while fiveBag * 5 <= mount {
+//    if ((mount - (fiveBag * 5)) % 3) == 0 {
+//        var threeBagActual: Int = (mount - (fiveBag * 5)) / 3
+//        resultArr.append([fiveBag, threeBagActual])
+//    }
+//    fiveBag += 1
+//}
+//
+//if resultArr.isEmpty {
+//    if threeBag * 3 <= mount {
+//        if (mount % 3) == 0 {
+//            print(mount/3)
+//        }
+//        else {
+//            print("-1")
+//        }
+//    }
+//    else {
+//        print("-1")
+//    }
+//}
+//else {
+//    print(resultArr.last![0] + resultArr.last![1])
+//}
+
+
