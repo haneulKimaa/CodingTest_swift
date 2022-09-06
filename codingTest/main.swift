@@ -12,7 +12,6 @@
 // 3. for문
 // 4. while문
 
-import Darwin
 import Foundation
 
 /*
@@ -695,9 +694,77 @@ for _ in 0..<readline {
         }
     }
 }
+
+// 10757 -> 다시 풀기
+var readline = readLine()!.split(separator: " ").map { String($0) }
+var firstNumArr = Array(readline[0].reversed()).map{Int(String($0))!}
+var secondNumArr = Array(readline[1].reversed()).map{Int(String($0))!}
+var sumArr: [Int] = []
+
+func makeSumArr(largerArr: [Int], smallerArr: [Int]) {
+    var firstNumLastNum: Int = 0
+    for i in 0..<smallerArr.count {
+        sumArr.append(largerArr[i]+smallerArr[i])
+        firstNumLastNum = i
+    }
+    for i in firstNumLastNum+1..<largerArr.count {
+        sumArr.append(largerArr[i])
+    }
+}
+
+if firstNumArr.count > secondNumArr.count {
+   makeSumArr(largerArr: firstNumArr, smallerArr: secondNumArr)
+}
+else if firstNumArr.count < secondNumArr.count {
+    makeSumArr(largerArr: secondNumArr, smallerArr: firstNumArr)
+}
+else {
+    for i in 0..<firstNumArr.count {
+        sumArr.append(firstNumArr[i]+secondNumArr[i])
+    }
+}
+
+for i in 0..<sumArr.count {
+    if sumArr[i] >= 10 {
+        if i == sumArr.count-1 {
+            sumArr.append(1)
+            sumArr[i] -= 10
+        }
+        else {
+            sumArr[i] -= 10
+            sumArr[i+1] += 1
+        }
+    }
+}
+
+sumArr = sumArr.reversed()
+
+print(sumArr.map { String($0) }.joined() )
+
+// 1978번
+/// 2부터 해당 수의 반까지 나눴을 때 나눠지지 않으면 소수
+let num = Int(readLine()!)
+let input = readLine()!.split(separator: " ").map { Int($0)! }
+var count: Int = 0
+
+for i in 0..<input.count {
+    let middleNum = input[i]/2
+    if input[i] == 1 || input[i] == 2 || input[i] == 3 {
+        if input[i] != 1 {
+            count += 1
+        }
+    }
+    else {
+        for j in 2...middleNum {
+            if (input[i]%j) == 0 {
+                break
+            }
+            if j == middleNum {
+                count += 1
+            }
+        }
+    }
+}
+print(count)
+
  */
-
-// 10757
-let readline = readLine()!.split(separator: " ").map{ Int($0)! }
-print(readline[0] + readline[1])
-
