@@ -184,31 +184,43 @@ private func quickSort(_ array: [Int]) -> [Int] {
     }
 }
 
-// 병합 정렬
-// 요소를 계속 나누어 2개가 되면 각 요소를 비교하고 다시 다음 요소와 비교
-private func mergeSort(array: [Int]) -> [Int] {
-    // 두 배열로 나누기
-    if array.count <= 1 {
-        return array
+// 합병 정렬 (다시 풀어보기)
+// 요소를 계속 divide 1개가 되면 각 요소를 비교하고 merge x 2 => 두 개를 merge
+func mergeSort(array: [Int]) {
+    func divide(array: [Int]) -> [Int] {
+        // array의 원소 개수가 1일 때
+        if array.count == 1 {
+            return array
+        }
+        // array의 원소 개수가 1이 아닐 때 계속 divide
+        let centerIndex: Int = array.count/2
+        let left: [Int] = Array(array[0..<centerIndex])
+        let right: [Int] = Array(array[centerIndex..<array.count])
+        // left를 풀기 위해 원소 개수가 1일 때까지 나누고 1일 때 merge right도 반복..
+        // 1. 왼쪽 divide -> 왼쪽devide(원소 1개) -> 오른쪽 devide(원소 1개) -> merge
+        // 2. 오른쪽 divide -> 왼쪽devide(원소 1개) -> 오른쪽 devide(원소 1개) -> merge
+        // merge(1, 2)
+        return merge(left: divide(array: left), right: divide(array: right))
     }
-    let centerIndex: Int = array.count/2
-    var left: [Int] = Array(array[0..<centerIndex])
-    var right: [Int] = Array(array[centerIndex..<array.count])
     
-    //
-    func merge(left: inout [Int], right: inout [Int]) -> [Int] {
-        var result: [Int] = []
-        while !left.isEmpty && !right.isEmpty {
-            if left[0] > right[0] {
-                result.append(left.removeFirst())
+    func merge(left: [Int], right: [Int]) -> [Int] {
+        var leftArr = left
+        var rightArr = right
+        var mergedArray: [Int] = []
+        while !leftArr.isEmpty && !rightArr.isEmpty {
+            if leftArr.first! < rightArr.first! {
+                mergedArray.append( leftArr.removeFirst() )
             }
             else {
-                result.append(right.removeFirst())
+                mergedArray.append( rightArr.removeFirst() )
             }
         }
-        return result
+        // left, right 중 하나라도 비었으면 나머지는 그대로 넣어줘도 됨(이미 sorting된 상태)
+        mergedArray.append(contentsOf: leftArr + rightArr)
+        return mergedArray
     }
-    
-    return merge(left: mergeSort(array: aArray), right: mergeSort(array: aArray))
+    print(divide(array: aArray))
 }
+
+
 
