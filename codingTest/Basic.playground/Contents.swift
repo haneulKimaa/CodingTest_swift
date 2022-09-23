@@ -184,10 +184,10 @@ private func quickSort(_ array: [Int]) -> [Int] {
     }
 }
 
-// 합병 정렬 (다시 풀어보기)
+// 합병 정렬 (다시 풀어보기) - 시간복잡도 O(nlog n)
 // 요소를 계속 divide 1개가 되면 각 요소를 비교하고 merge x 2 => 두 개를 merge
-func mergeSort(array: [Int]) {
-    func divide(array: [Int]) -> [Int] {
+private func mergeSort(array: [Int]) {
+    func divide(array: [Int]) -> [Int] { // 1이 될 때까지 반으로 나누기 -> log n
         // array의 원소 개수가 1일 때
         if array.count == 1 {
             return array
@@ -207,7 +207,7 @@ func mergeSort(array: [Int]) {
         var leftArr = left
         var rightArr = right
         var mergedArray: [Int] = []
-        while !leftArr.isEmpty && !rightArr.isEmpty {
+        while !leftArr.isEmpty && !rightArr.isEmpty { // 모든 수 비교 -> N
             if leftArr.first! < rightArr.first! {
                 mergedArray.append( leftArr.removeFirst() )
             }
@@ -221,6 +221,63 @@ func mergeSort(array: [Int]) {
     }
     print(divide(array: aArray))
 }
+// 순차탐색 - 시간복잡도 O(n)
+private func sequencialSearch(value: Int, array: [Int]) -> Bool {
+    for i in 0..<array.count {
+        if array[i] == value {
+            print("탐색 횟수", i+1)
+            return true
+        }
+    }
+    return false
+}
 
+sequencialSearch(value: 4, array: aArray)
+
+// 이진탐색 - 시간복잡도 O(log n)
+// 이진탐색 - 재귀함수
+private func binarySearchRecursive(value: Int, array: [Int]) {
+    let selectedArray = array.sorted()
+    var searchNum: Int = 1
+    
+    func search(array: [Int]) -> [Int] {
+        let middleIndex = array.count/2
+        var newArray: [Int] = []
+        
+        if array[middleIndex] == value {
+            print("탐색 횟수", searchNum)
+            return array
+        }
+        searchNum += 1
+        newArray = array[middleIndex] < value ? Array(array[middleIndex+1]...array[array.count-1]) : Array(array[0]...array[middleIndex-1])
+        return search(array: newArray)
+    }
+    search(array: selectedArray)
+}
+
+// 이진탐색 - 반복
+private func binarySearch_Repetitive(value: Int, array: [Int]) -> Bool {
+    let selectedArray = array.sorted()
+    var searchNum: Int = 1
+    var startIndex: Int = 0
+    var endIndex: Int = selectedArray.count
+    
+    while startIndex != endIndex {
+        let middleIndex = (startIndex + endIndex)/2
+        searchNum += 1
+        if selectedArray[middleIndex] == value {
+            print(searchNum)
+            return true
+        }
+        if selectedArray[middleIndex] > value {
+            endIndex = middleIndex - 1
+        }
+        else {
+            startIndex = middleIndex + 1
+        }
+    }
+    print(searchNum)
+    return true
+}
 
 
