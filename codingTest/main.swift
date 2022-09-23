@@ -768,3 +768,32 @@ for i in 0..<input.count {
 print(count)
 
  */
+
+// 1920번
+func num1920() {
+    let num = Int(readLine()!)
+    var array = readLine()!.split(separator: " ").map { Int($0)! }
+    let num2 = Int(readLine()!)
+    let array2 = readLine()!.split(separator: " ").map { Int($0)! }
+    
+    let sortedArray = array.sorted()
+    func binarySearch(value: Int, start: Int, end: Int) -> Bool{
+        let mid = (start+end)/2
+        if start > end || sortedArray[end] < value {
+            return false
+        }
+        if sortedArray[mid] > value {
+            return binarySearch(value: value, start: 0, end: mid-1)
+        }
+        else if sortedArray[mid] < value  {
+            return binarySearch(value: value, start: mid+1, end: end)
+        }
+        else {
+            return true
+        }
+    }
+    for i in 0..<array2.count {
+        print(binarySearch(value: array2[i], start: 0, end: sortedArray.count-1) ? "1" : "0" )
+    }
+}
+
