@@ -351,7 +351,49 @@ private func depthFirstSearch(graph: [String: [String]], startValue: String) -> 
         }
     }
     return visitedQueue
-    
 }
+
+// 탐욕 알고리즘
+/// 동전 문제 - 동전의 수를 가장 적게 해서 금액 채우기
+private func greedyCoin(totalPrice: Int, count: Int) -> Int {
+    var coinArray = [1, 50, 100, 500]
+    var price = totalPrice
+    var coinCount = count
+    coinArray = coinArray.reversed()
+    
+    for coin in coinArray {
+        coinCount += price/coin
+        print(coin, price/coin)
+        price = price%coin
+    }
+    return coinCount
+}
+
+/// 부분 베낭 문제
+/// 무게 제한이 있는 베낭에 최대 가치를 가지도록 물건 넣기. 물건을 쪼갤 수 있음
+/// 무게당 가치로 비교
+private func greedyFractionalKnapsack(k: Int, thing: [(Double, Double)]) -> Double {
+    
+    var maxWeight = Double(k)
+    var totalValue: Double = 0
+    let sortedThings = thing.sorted { $0.1/$0.0 > $1.1/$1.0 }
+    print(sortedThings)
+    for i in sortedThings {
+        if maxWeight >= i.0 {
+            maxWeight -= i.0
+            totalValue += Double(i.1)
+            print(i)
+        }
+        else {
+            totalValue += ((Double(maxWeight) / Double(i.0))*Double(i.1))
+            print(i.0, (Double(maxWeight) / Double(i.0))*Double(i.1))
+            break
+        }
+    }
+    return totalValue
+}
+
+
+
 
 

@@ -797,3 +797,17 @@ func num1920() {
     }
 }
 
+// 11399번
+func num11399() -> Int {
+    let personCount = Int(readLine()!)!
+    var timeArray = readLine()!.split(separator: " ").map { Int($0)! }.sorted(by: <)
+    var result = 0
+    
+    for i in 0..<timeArray.count {
+        for j in 0...i {
+            print(result)
+            result += timeArray[j]
+        }
+    }
+    return result
+}
