@@ -158,7 +158,7 @@ private func dpFib(n: Int) -> Int {
 // -> 각 단계의 연산은 둘을 곱해서 O(n)
 // 2. 단계는 항상 logN개가 만들어지므로 // 2^i = N
 // 총 연산 수는 단계 수(logN) x 각 단계 연산 수(n)
-// 시간 복잡도 O(NlongN)
+// 시간 복잡도 O(Nlog N)
 //
 // 최악의 경우 (계속 가장 작은 값이 pivot이 되는 경우, 나머지 요소는 모두 right이 됨)
 // 결국 모든 요소을 비교해봐야함 -> for 문이 두번 중첩된 경우와 같음
@@ -225,14 +225,11 @@ private func mergeSort(array: [Int]) {
 private func sequencialSearch(value: Int, array: [Int]) -> Bool {
     for i in 0..<array.count {
         if array[i] == value {
-            print("탐색 횟수", i+1)
             return true
         }
     }
     return false
 }
-
-sequencialSearch(value: 4, array: aArray)
 
 // 이진탐색 - 시간복잡도 O(log n)
 // 이진탐색 - 재귀함수
@@ -278,6 +275,83 @@ private func binarySearch_Repetitive(value: Int, array: [Int]) -> Bool {
     }
     print(searchNum)
     return true
+}
+
+// 그래프
+// Swift Array를 큐처럼 사용
+extension Array {
+    mutating func enqueue(value: Element) {
+        self.append(value)
+    }
+    mutating func dequeue() -> Element {
+        return self.removeFirst()
+    }
+}
+
+// 너비 우선 탐색
+// 시간복잡도 O(V+E)
+private func breadthFirstSearch(graph: [String: [String]], startValue: String) -> [String] {
+    var visitedQueue: [String] = []
+    var needVisitQueue: [String] = [startValue]
+    
+    visitedQueueDequeue()
+    
+    /// 탐색할 값을 visitedQueue에 enqueue하고 근접 정점을 needVisitQueue에 넣음
+    func visitedQueueDequeue() {
+        /// visitedQueue에 추가할 값이  이미 없을 때만 enqueue
+        while !needVisitQueue.isEmpty {
+            if let needVisitQueuefirst = needVisitQueue.first {
+                if !visitedQueue.contains(needVisitQueuefirst) {
+                    visitedQueue.enqueue(value: needVisitQueue.dequeue())
+                    needVisitQueue += graph[visitedQueue.last!]!
+                }
+                else {
+                    needVisitQueue.dequeue()
+                }
+            }
+        }
+    }
+    return visitedQueue
+}
+
+var graph: [String: [String]] = [
+    "A" : ["B", "C"],
+    "B" : ["A", "D"],
+    "C" : ["A", "G", "H", "I"],
+    "D" : ["B", "E", "F"],
+    "G" : ["C"],
+    "H" : ["C"],
+    "I" : ["C", "J"],
+    "E" : ["D"],
+    "F" : ["D"],
+    "J" : ["I"]
+]
+
+// 깊이 우선 탐색
+// 시간복잡도 O(V+E)
+private func depthFirstSearch(graph: [String: [String]], startValue: String) -> [String] {
+    var visitedQueue: [String] = []
+    var needVisitStack: [String] = [startValue]
+    
+    visitedQueueDequeue()
+    
+    /// 탐색할 값을 visitedQueue에 enqueue하고 근접 정점을 needVisitQueue에 넣음
+    func visitedQueueDequeue() {
+        /// visitedQueue에 추가할 값이  이미 없을 때만 enqueue
+        while !needVisitStack.isEmpty {
+            if let needVisitQueueLast = needVisitStack.last {
+                if !visitedQueue.contains(needVisitQueueLast) {
+                    visitedQueue.enqueue(value: needVisitStack.popLast()!)
+                    needVisitStack += graph[visitedQueue.last!]!
+                }
+                else {
+                    needVisitStack.popLast()
+                }
+            }
+        }
+    }
+    return visitedQueue
+    
 }
 
 
