@@ -394,6 +394,58 @@ private func greedyFractionalKnapsack(k: Int, thing: [(Double, Double)]) -> Doub
 }
 
 
+// 최단 경로 알고리즘
+// 다익스트라 알고리즘
+
+public struct NodePriority: Comparable {
+    public static func < (lhs: NodePriority, rhs: NodePriority) -> Bool {
+        lhs.priority < rhs.priority
+    }
+    var node: String = ""
+    var priority: Int = 0
+}
 
 
+public func dijkstra(start: String, graph: [String: [String : Int]]) -> [String : Int] {
+    
+    // 배열
+    var result: [String : Int] = [:]
+    // 우선순위 큐
+    var priorityQueue = MinHeap.init(NodePriority(node: start, priority: 0))
+    
+    // 배열 초기값 세팅
+    result[start] = 0
+    for element in graph {
+        result[element.key] = (element.key != start) ? Int.max : 0
+    }
+    
+    // pop하고 그 노드의 근접노드를 우선순위 큐에 넣음. 다시 pop
+    while !priorityQueue.heap.isEmpty {
+        
+        guard let popedNode = priorityQueue.pop() else {
+            break
+        }
+        print("popedNode.node", popedNode.node)
+        // pop한 노드의 인접노드를 result와 비교, 작은 값으로 바꾸고 우선순위 큐에 그 노드가 없을 시 insert
+        for (node, priority) in graph[popedNode.node]! {
+            let distance = popedNode.priority + priority
+            if result[node]! > distance {
+                result[node] = distance
+                priorityQueue.insert(NodePriority(node: node, priority: priority))
+            }
+        }
+    }
+    return result
+}
+
+var graph2: [String: [String : Int]] = [
+    "A" : ["B": 8, "C":1, "D":2],
+    "B" : [:],
+    "C" : ["B":5, "D":2],
+    "D" : ["E":3, "F":5],
+    "E" : ["F": 1],
+    "F" : [:]
+]
+
+print(dijkstra(start: "A", graph: graph2))
 
