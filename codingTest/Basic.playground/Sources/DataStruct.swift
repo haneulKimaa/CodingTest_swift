@@ -1,7 +1,6 @@
 import Foundation
 
-
-// 이진 탐색 트리
+// 이진 트리 노드
 public class Node<T: Comparable> { // 비교 가능한 제네릭 데이터
     var data: T
     var left: Node?
@@ -184,5 +183,99 @@ public class BinarySearchTree<T: Comparable> {
         + diagram(for: node.left, bottom + "│ ", bottom + "└──", bottom + " ")
     }
 }
+
+// 최소힙(우선순위큐)
+public class MinHeap<T: Comparable> {
+    public var heap: Array<T> = []
+    
+    public init(_ data: T) {
+        heap.append(data)
+        heap.append(data)
+    }
+    
+    public func insert(_ data: T) -> Bool {
+        if heap.isEmpty {
+            // 1번째 인덱스부터 시작
+            heap.append(data)
+            heap.append(data)
+            return true
+        }
+        heap.append(data)
+        
+        var parentNodeIndex = (heap.count-1)/2
+        var presentNodeIndex = (heap.count-1)
+        
+        compareNSwap(presentNodeIndex: presentNodeIndex)
+        
+        func compareNSwap(presentNodeIndex: Int) {
+            parentNodeIndex = presentNodeIndex/2
+            
+            if heap[parentNodeIndex] > heap[presentNodeIndex] {
+                heap.swapAt(presentNodeIndex, presentNodeIndex/2)
+                if parentNodeIndex/2 >= 1 {
+                    compareNSwap(presentNodeIndex: parentNodeIndex)
+                }
+            }
+        }
+        return true
+    }
+    
+    public func pop() -> T? {
+        
+        if heap.count <= 1 {
+            print("heap is empty")
+            return nil
+        }
+        
+        var node = heap[1]
+        heap.swapAt(1, heap.count - 1)
+        heap.removeLast()
+    
+        compareNSwap(parent: 1)
+        func compareNSwap(parent: Int) {
+            
+            var parentIndex = parent
+            var leftNode = parentIndex * 2
+            var rightNode = parentIndex * 2 + 1
+            
+            // 자식 노드가 없는 경우
+            if heap.count <= leftNode {
+                // 바꾸지 않음
+            }
+            // 왼쪽 자식노드만 있는 경우
+            else if heap.count <= rightNode {
+                // 왼쪽 노드만 비교
+                if heap[leftNode] < heap[parent] {
+                    heap.swapAt(leftNode, parent)
+                    compareNSwap(parent: leftNode)
+                }
+            }
+            // 둘 다 있는 경우
+            else {
+                // 왼쪽 자식 노드가 부모보다 작을 때
+                if heap[leftNode] < heap[parent] {
+                    // 오른쪽 자식 노드가 왼쪽 자식노드보다 작을 때
+                    if heap[rightNode] < heap[leftNode] {
+                        heap.swapAt(parent, rightNode)
+                        compareNSwap(parent: rightNode)
+                    }
+                    else {
+                        heap.swapAt(parent, leftNode)
+                        compareNSwap(parent: leftNode)
+                    }
+                }
+                else {
+                    if heap[rightNode] < heap[parent] {
+                        heap.swapAt(parent, rightNode)
+                        compareNSwap(parent: rightNode)
+                    }
+                }
+            }
+            
+        }
+        return node
+    }
+}
+
 
 
