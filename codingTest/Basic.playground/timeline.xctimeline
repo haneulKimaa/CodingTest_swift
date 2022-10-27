@@ -3,11 +3,15 @@
    version = "3.0">
    <TimelineItems>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/kimhaneul/Documents/GitHub/CodingTest_swift/codingTest/Basic.playground#CharacterRangeLen=13&amp;CharacterRangeLoc=12682&amp;EndingColumnNumber=105&amp;EndingLineNumber=474&amp;StartingColumnNumber=92&amp;StartingLineNumber=474&amp;Timestamp=686836989.1739039"
+         documentLocation = "file:///Users/kimhaneul/Documents/GitHub/CodingTest_swift/codingTest/Basic.playground#CharacterRangeLen=0&amp;CharacterRangeLoc=11525&amp;EndingColumnNumber=5&amp;EndingLineNumber=436&amp;StartingColumnNumber=5&amp;StartingLineNumber=436&amp;Timestamp=688563400.4082479"
          selectedRepresentationIndex = "0">
       </LoggerValueHistoryTimelineItem>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/kimhaneul/Documents/GitHub/CodingTest_swift/codingTest/Basic.playground#CharacterRangeLen=12&amp;CharacterRangeLoc=12195&amp;EndingColumnNumber=25&amp;EndingLineNumber=465&amp;StartingColumnNumber=13&amp;StartingLineNumber=465&amp;Timestamp=686836989.174033"
+         documentLocation = "file:///Users/kimhaneul/Documents/GitHub/CodingTest_swift/codingTest/Basic.playground#CharacterRangeLen=0&amp;CharacterRangeLoc=11525&amp;EndingColumnNumber=5&amp;EndingLineNumber=436&amp;StartingColumnNumber=5&amp;StartingLineNumber=436&amp;Timestamp=688563400.40836"
+         selectedRepresentationIndex = "0">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/kimhaneul/Documents/GitHub/CodingTest_swift/codingTest/Basic.playground#CharacterRangeLen=0&amp;CharacterRangeLoc=10290&amp;EndingColumnNumber=1&amp;EndingLineNumber=393&amp;StartingColumnNumber=1&amp;StartingLineNumber=393&amp;Timestamp=688563400.408444"
          selectedRepresentationIndex = "0">
       </LoggerValueHistoryTimelineItem>
    </TimelineItems>
