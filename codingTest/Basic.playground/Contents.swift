@@ -431,7 +431,7 @@ public func dijkstra(start: String, graph: [String: [String : Int]]) -> [String 
             let distance = popedNode.priority + priority
             if result[node]! > distance {
                 result[node] = distance
-                priorityQueue.insert(NodePriority(node: node, priority: priority))
+                priorityQueue.insert(NodePriority(node: node, priority: distance))
             }
         }
     }

@@ -216,7 +216,6 @@ public class MaxHeap<T: Comparable> {
                 return true
             }
         }
-        return true
     }
 }
 
@@ -240,7 +239,7 @@ public class MinHeap<T: Comparable> {
         heap.append(data)
         
         var parentNodeIndex = (heap.count-1)/2
-        var presentNodeIndex = (heap.count-1)
+        let presentNodeIndex = (heap.count-1)
         
         compareNSwap(presentNodeIndex: presentNodeIndex)
         
@@ -260,20 +259,20 @@ public class MinHeap<T: Comparable> {
     public func pop() -> T? {
         
         if heap.count <= 1 {
-            print("heap is empty")
+//            print("heap is empty")
             return nil
         }
         
-        var node = heap[1]
+        let node = heap[1]
         heap.swapAt(1, heap.count - 1)
         heap.removeLast()
     
         compareNSwap(parent: 1)
         func compareNSwap(parent: Int) {
             
-            var parentIndex = parent
-            var leftNode = parentIndex * 2
-            var rightNode = parentIndex * 2 + 1
+            let parentIndex = parent
+            let leftNode = parentIndex * 2
+            let rightNode = parentIndex * 2 + 1
             
             // 자식 노드가 없는 경우
             if heap.count <= leftNode {
@@ -314,5 +313,11 @@ public class MinHeap<T: Comparable> {
     }
 }
 
-
+public struct NodePriority: Comparable {
+    public static func < (lhs: NodePriority, rhs: NodePriority) -> Bool {
+        lhs.priority < rhs.priority
+    }
+    var node: Int = 0
+    var priority: Int = 0
+}
 

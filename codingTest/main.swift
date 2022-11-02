@@ -800,13 +800,101 @@ func num1920() {
 // 11399번
 func num11399() -> Int {
     let personCount = Int(readLine()!)!
-    var timeArray = readLine()!.split(separator: " ").map { Int($0)! }.sorted(by: <)
+    let timeArray = readLine()!.split(separator: " ").map { Int($0)! }.sorted(by: <)
     var result = 0
     
     for i in 0..<timeArray.count {
         for j in 0...i {
             print(result)
             result += timeArray[j]
+        }
+    }
+    return result
+}
+
+// 1504번
+func num1504() -> Int {
+    // N 정점으로 이동(최단거리)
+    // 조건 : 주어진 정점을 반드시 통과해야함
+    // 예외 : 경로가 없을 때 -1 출력
+    let readline = readLine()!.split(separator: " ").map { Int($0)! }
+    var graph: [Int: [Int: Int]] = [:]
+    var startToSecondToThirdToEnd: Int = Int.max
+    var startTothirdToSecondToEnd: Int = Int.max
+    
+    for i in 1...readline[0] {
+        graph[i] = [:]
+    }
+    
+    // 양방향 그래프
+    for _ in 0..<readline[1] {
+        let line = readLine()!.split(separator: " ").map { Int($0)! }
+        graph[line[0]]![line[1]] = line[2]
+        graph[line[1]]![line[0]] = line[2]
+    }
+    let essentialNodes = readLine()!.split(separator: " ").map { Int($0)! }
+    
+    let start = dijkstra(start: 1, graph: graph)
+    let first = dijkstra(start: essentialNodes[0], graph: graph)
+    let second = dijkstra(start: essentialNodes[1], graph: graph)
+    
+    // 1->2->3->4
+    // 오버플로우 방지
+    if start[essentialNodes[0]] != Int.max &&
+        first[essentialNodes[1]] != Int.max &&
+        second[readline[0]] != Int.max {
+        startToSecondToThirdToEnd = start[essentialNodes[0]]! + first[essentialNodes[1]]! + second[readline[0]]!
+    }
+    else {
+        return -1
+    }
+    
+    // 1->3->2->4
+    // 오버플로우 방지
+    if start[essentialNodes[1]] != Int.max &&
+        first[readline[0]] != Int.max &&
+        second[essentialNodes[0]] != Int.max {
+        startTothirdToSecondToEnd = start[essentialNodes[1]]! + second[essentialNodes[0]]! + first[readline[0]]!
+    }
+    else {
+        return -1
+    }
+    
+    return min(startToSecondToThirdToEnd, startTothirdToSecondToEnd)
+}
+
+// 수정된 다익스트라
+func dijkstra(start: Int, graph: [Int: [Int : Int]]) -> [Int : Int] {
+    
+    // 배열
+    var result: [Int : Int] = [:]
+    // 우선순위 큐
+    let priorityQueue = MinHeap.init(NodePriority(node: start, priority: 0))
+    
+    // 배열 초기값 세팅
+    result[start] = 0
+    for element in graph {
+        result[element.key] = (element.key != start) ? Int.max : 0
+    }
+    
+    // pop하고 그 노드의 근접노드를 우선순위 큐에 넣음. 다시 pop
+    while !priorityQueue.heap.isEmpty {
+        
+        guard let popedNode = priorityQueue.pop() else {
+            break
+        }
+        
+        if result[popedNode.node]! < popedNode.priority {
+            continue
+        }
+        
+        // pop한 노드의 인접노드를 result와 비교, 작은 값으로 바꾸고 우선순위 큐에 그 노드가 없을 시 insert
+        for (node, priority) in graph[popedNode.node]! {
+            let distance = popedNode.priority + priority
+            if result[node]! > distance {
+                result[node] = distance
+                priorityQueue.insert(NodePriority(node: node, priority: distance))
+            }
         }
     }
     return result
