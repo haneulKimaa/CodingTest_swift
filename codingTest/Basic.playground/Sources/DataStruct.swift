@@ -229,6 +229,8 @@ public class MinHeap<T: Comparable> {
         heap.append(data)
     }
     
+    public init() { }
+    
     @discardableResult
     public func insert(_ data: T) -> Bool {
         if heap.isEmpty {

@@ -447,5 +447,153 @@ var graph2: [String: [String : Int]] = [
     "F" : [:]
 ]
 
-print(dijkstra(start: "A", graph: graph2))
+let vertices = ["A", "B", "C", "D"]
+let edges = [
+    (5,  "A", "B"),
+    (1,  "A", "C"),
+    (10, "A", "D"),
+    (5,  "B", "A"),
+    (3,  "B", "D"),
+    (1,  "C", "A"),
+    (8,  "C", "D"),
+    (10, "D", "A"),
+    (3,  "D", "B"),
+    (8,  "D", "C"),
+]
 
+// 최소 신장 트리
+// 1. 사이클 발생x, 모든 노드 연결 2. 최소 가중치 사용
+// 크루스칼 알고리즘
+
+typealias edge = (Int, String, String)
+func kruskal(vertices: [String], edges: [edge]) -> [edge]{
+    // 결과가 될 최소 신장 트리
+    var mst: [edge] = []
+    
+    // 가중치 오름차 순으로 정렬
+    var edges = edges.sorted { $0.0 < $1.0 }
+    // union 시 사용할 rank
+    var rank: [String: Int] = [:]
+    // find 에서 찾을 루트 노드
+    var parent: [String: String] = [:]
+    
+    // 1. rank, parent 초기화 (Union-find에서의 초기화)
+    for vertex in vertices {
+        // 각 노드가 자신의 부모노드가 됨
+        parent.updateValue(vertex, forKey: vertex)
+        rank.updateValue(0, forKey: vertex)
+    }
+    
+    // 2. 루트 노드 리턴
+    func find(_ node: String) -> String {
+        // path compresion
+        if node != parent[node] { // 현재 노드가 루트 노드가 아닐 때
+            // 부모 노드에 루트 노드를 대입
+            parent[node] = find(parent[node]!)
+        }
+        return parent[node]!
+    }
+    
+    // 3. rank를 확인, union
+    func union(_ nodeV: String, _ nodeU: String) {
+        // 부모 노드
+        let rootV = find(nodeV)
+        let rootU = find(nodeU)
+        
+        // union-by-rank
+        if rank[rootU]! > rank[rootV]! {
+            parent[rootV] = rootU
+        }
+        else {
+            parent[rootU] = rootV
+            if rank[rootU] == rank[rootV] {
+                rank[rootV]! += 1
+            }
+        }
+    }
+    
+    while mst.count < (vertices.count - 1) {
+        let node = edges.removeFirst()
+        // 사이클이 없을 때
+        if find(node.1) != find(node.2) {
+            union(node.1, node.2)
+            mst.append(node)
+        }
+    }
+    
+    return mst
+}
+
+struct Edge: Comparable {
+    var start: String
+    var dest: String
+    var weight: Int
+    
+    init(_ start: String, _ dest: String, weight: Int) {
+        self.start = start
+        self.dest = dest
+        self.weight = weight
+    }
+    
+    static func < (lhs: Edge, rhs: Edge) -> Bool {
+        lhs.weight < rhs.weight
+    }
+}
+
+let vertices2 = ["A", "B", "C", "D"]
+let edges2: [Edge] = [
+   .init("A", "B", weight: 5),
+   .init("A", "C", weight: 1),
+   .init("A", "D", weight: 10),
+   .init("B", "A", weight: 5),
+   .init("B", "D", weight: 3),
+   .init("C", "A", weight: 1),
+   .init("C", "D", weight: 8),
+   .init("D", "A", weight: 10),
+   .init("D", "B", weight: 3),
+   .init("D", "C", weight: 8)
+]
+
+func prim(start: String, vertices: [String], edges: [Edge]) -> [Edge]? {
+    var mst: [Edge] = []
+    var edgeList = MinHeap<Edge>()
+    var connectedNode: [String] = []
+    var adjacentEdges: [String: [Edge]] = [:]
+    
+    for vertex in vertices {
+        adjacentEdges.updateValue([], forKey: vertex)
+    }
+    
+    for edge in edges {
+        adjacentEdges[edge.start]?.append(edge)
+    }
+    
+    // 시작 노드 세팅
+    guard let startEdge = adjacentEdges[start] else {
+        return nil
+    }
+    connectedNode.append(start)
+    
+    for edge in startEdge {
+        edgeList.insert(edge)
+    }
+    
+    while mst.count < vertices.count-1 {
+        guard let popdedEdge = edgeList.pop() else {
+            return nil
+        }
+        if !connectedNode.contains(popdedEdge.dest) {
+            connectedNode.append(popdedEdge.dest)
+            for edge in adjacentEdges[popdedEdge.dest]! {
+                // 이미 연결되어있다면 어차피 위 if에서 선택되지 못함
+                if !connectedNode.contains(edge.dest) {
+                    edgeList.insert(edge)
+                }
+            }
+            mst.append(popdedEdge)
+        }
+    }
+    return mst
+}
+
+print(prim(start: "A", vertices: vertices2, edges: edges2))
