@@ -596,4 +596,42 @@ func prim(start: String, vertices: [String], edges: [Edge]) -> [Edge]? {
     return mst
 }
 
-print(prim(start: "A", vertices: vertices2, edges: edges2))
+
+func backtracking(size: Int) -> Int {
+    
+    // index 가 x좌표
+    var resultCoordinateArray = [Int].init(repeating: -1, count: size)
+    var resultCount = 0
+    
+    func check(_ x: Int, _ y: Int) -> Bool {
+        for i in 0..<x {
+            if resultCoordinateArray[i] == y
+                || abs(x-i) - abs(resultCoordinateArray[i] - y) == 0 {
+                return false
+            }
+        }
+        return true
+    }
+    
+    // DFS
+    func dfs(x: Int) {
+        
+        if x == size {
+            resultCount += 1
+            return
+        }
+        
+        // x행의 y열을 돌면서 가능한지 확인
+        for y in 0..<size {
+            if check(x, y) {
+                resultCoordinateArray[x] = y
+                // 다음 행으로
+                dfs(x: x+1)
+                resultCoordinateArray[x] = -1
+            }
+        }
+    }
+    dfs(x: 0)
+    return resultCount
+}
+print(backtracking(size: 4))
