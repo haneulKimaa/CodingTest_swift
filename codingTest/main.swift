@@ -430,3 +430,137 @@ func solution(_ left:Int, _ right:Int) -> Int {
     
     return answer
 }
+
+// MARK: - 로또의 최고 순위와 최저 순위
+func solution(_ lottos:[Int], _ win_nums:[Int]) -> [Int] {
+    var lottosSet: Set<Int> = []
+    var winNumSet: Set<Int> = []
+    
+    for lotto in lottos {
+        if lotto != 0 {
+            lottosSet.insert(lotto)
+        }
+    }
+    for win_num in win_nums {
+        winNumSet.insert(win_num)
+    }
+    if lottosSet == winNumSet {
+        return [1, 1]
+    }
+    
+    let correctCount = lottosSet.filter { winNumSet.contains($0) }.count
+    let totalCorrectCount = correctCount+(lottos.count - lottosSet.count)
+    return [totalCorrectCount == 0 ? 6 : 7-totalCorrectCount, correctCount == 0 ? 6 : 7-correctCount ]
+}
+
+// 다른 사람 풀이
+func solution(lottos:[Int], _ win_nums:[Int]) -> [Int] {
+    let winCount = win_nums.filter { lottos.contains($0) }.count
+    let zeroCount = lottos.filter { $0 == 0 }.count
+    
+    return [min(7-winCount-zeroCount, 6), min(7-winCount, 6)]
+}
+
+// MARK: - 음양 더하기
+func solution(_ absolutes: [Int], _ signs:[Bool]) -> Int {
+    var absoluteArray = absolutes
+    for i in 0..<absoluteArray.count {
+        absoluteArray[i] = signs[i] == true ? absoluteArray[i] : -1 * absoluteArray[i]
+    }
+    return absoluteArray.reduce(0, +)
+}
+
+// 다른 사람 풀이
+func solution(absolutes: [Int], _ signs:[Bool]) -> Int {
+    return (0..<absolutes.count).map { signs[$0] ? absolutes[$0] : -1 * absolutes[$0] }.reduce(0, +)
+}
+
+// MARK: - 신규 아이디 추천
+func solution(new_id:String) -> String {
+    
+    var newID = new_id.lowercased()
+    
+    newID = newID.filter { $0 == "_" || $0 == "-" || $0 == "." || $0.isNumber || $0.isLetter }
+    
+    while newID.contains("..") {
+        newID = newID.replacingOccurrences(of: "..", with: ".")
+    }
+    
+    while newID.first == "." {
+        newID.removeFirst()
+    }
+    
+    while newID.last == "." {
+        newID.removeLast()
+    }
+
+    if newID.isEmpty {
+        newID = "a"
+    }
+    
+    
+    if newID.count >= 16 {
+        newID = String(newID.prefix(15))
+        while newID.last == "." {
+            newID.removeLast()
+        }
+    }
+    
+    while newID.count <= 2 {
+        newID += String(newID.last!)
+        if newID.count > 2 {
+            return newID
+        }
+    }
+    return newID
+}
+
+// MARK: - 내적
+func solution(a:[Int], _ b:[Int]) -> Int {
+    return (0..<a.count).map { a[$0]*b[$0] }.reduce(0, +)
+}
+
+// MARK: - 3진법 뒤집기
+// 런타임 에러
+func solution(nValue: Int) -> Int {
+    var result: String = ""
+    var input = nValue
+    
+    if input < 3 {
+        return input
+    }
+    
+    while input >= 3 {
+        result += String((input % 3))
+        input /= 3
+        if input == 0 {
+            break
+        }
+        if input < 3 {
+            result += String(input)
+            break
+        }
+    }
+    
+    let array: [Int] = result.map { Int(String($0))! }
+    let resultArray = (0..<array.count).map{ Int(truncating: NSDecimalNumber(decimal: pow(3, array.count-$0-1))) * array[$0] }
+    return resultArray.reduce(0, +)
+}
+
+// try breaking up the expression into distinct sub-expressions
+func solution(nValue3: Int) -> Int {
+    var result: [Int] = []
+    var input = nValue3
+    
+    while input > 0 {
+        result.append(input%3)
+        input /= 3
+    }
+    var resultArray = (0..<result.count).map{ Int(pow(3.0, Double(result.count-$0-1))) * result[$0] }
+    return resultArray.reduce(0, +)
+}
+
+func solution(nValue2: Int) -> Int {
+    return Int(String(String(nValue2, radix: 3).reversed()), radix: 3)!
+}
+
